@@ -14,10 +14,12 @@ const MovieForm = ({ addMovie }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (!movieData?.title.trim() || movieData?.ott.trim()) {
+    if (!movieData.title.trim() || !movieData.ott.trim()) {
       return;
     }
+
     addMovie(movieData);
+    setMovieData({ ...movieData, title: "", ott: "" }); // Clear form fields after submission
   };
 
   return (
