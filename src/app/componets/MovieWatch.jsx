@@ -3,9 +3,11 @@ import React, { useState } from "react";
 import Heading from "./Heading";
 import MovieFrom from "./MovieFrom";
 import MovieList from "./MovieList";
+import Filter from "./Filter";
 
 const MovieWatch = () => {
   const [movies, setMovies] = useState([]);
+  const [filterMenu, setFilterMenu] = useState("All");
 
   const addMovie = (movieData) => {
     const newMovie = {
@@ -22,6 +24,7 @@ const MovieWatch = () => {
     const updatedMovies = movies.map((movie) =>
       movie.id === id ? { ...movie, rating } : movie
     );
+
     setMovies(updatedMovies);
   };
   const onToggleWatched = (id) => {
@@ -34,12 +37,22 @@ const MovieWatch = () => {
     const updatedMovies = movies.filter((movie) => movie.id !== id);
     setMovies(updatedMovies);
   };
+
+  // Filtering logic
+  const filteredMovies = movies.filter((movie) => {
+    if (filterMenu === "Watch") return movie.watched;
+    if (filterMenu === "Unwatch") return !movie.watched;
+    if (filterMenu === "Ratings") return movie.rating !== null;
+    return true;
+  });
+
   return (
     <div className="my-20 max-w-[550px] mx-auto bg-slate-400 p-4">
       <Heading />
       <MovieFrom addMovie={addMovie} />
+      <Filter filterMenu={filterMenu} setFilterMenu={setFilterMenu} />
       <MovieList
-        movies={movies}
+        movies={filteredMovies}
         onRateMovie={onRateMovie}
         onToggleWatched={onToggleWatched}
         onDeleteMovie={onDeleteMovie}

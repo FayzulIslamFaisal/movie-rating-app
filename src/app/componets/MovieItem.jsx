@@ -27,7 +27,7 @@ const MovieItem = ({ movie, onRateMovie, onToggleWatched, onDeleteMovie }) => {
         <button
           onClick={() => onToggleWatched(movie.id)}
           className={` w-auto h-auto px-3 py-1 ${
-            movie.watched ? "bg-red-500" : "bg-blue-500"
+            movie.watched ? "bg-green-500" : "bg-blue-500"
           } rounded-full text-white transition-all duration-300`}
         >
           {movie.watched ? "Watched" : " UnWatched"}
