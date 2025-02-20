@@ -1,20 +1,27 @@
 import React from "react";
 import MovieItem from "./MovieItem";
 
-const MovieList = ({ movies, onRateMovie, onToggleWatched, onDeleteMovie }) => {
+const MovieList = ({
+  allFormDatas,
+  onHandleDelete,
+  onWatchedToggle,
+  onRatingHandle,
+  onHandleEdit,
+}) => {
   return (
     <div className="mt-5">
       <ul>
-        {movies.length === 0 ? (
+        {allFormDatas?.length === 0 ? (
           <h1 className="text-center ">No movies added yet.</h1>
         ) : (
-          movies.map((movie) => (
+          allFormDatas.map((itemData) => (
             <MovieItem
-              key={movie.id}
-              movie={movie}
-              onRateMovie={onRateMovie}
-              onToggleWatched={onToggleWatched}
-              onDeleteMovie={onDeleteMovie}
+              itemData={itemData}
+              key={itemData.id}
+              onHandleDelete={onHandleDelete}
+              onWatchedToggle={onWatchedToggle}
+              onRatingHandle={onRatingHandle}
+              onHandleEdit={onHandleEdit}
             />
           ))
         )}

@@ -1,22 +1,27 @@
-const Filter = ({ filterMenu, setFilterMenu }) => {
-  const options = ["All", "Watch", "Unwatch", "Ratings"];
-
+const Filter = ({ filterData, setFilterData }) => {
+  const filterOptions = ["All", "Watched", "UnWatched", "Rating"];
   return (
     <ul className="flex items-center gap-3 justify-center mt-4">
-      {options.map((filter) => (
-        <li key={filter}>
-          <button
-            className={`border px-4 py-1 text-center capitalize rounded ${
-              filterMenu === filter
-                ? "bg-green-600 text-white"
-                : "bg-slate-800 text-white"
-            }`}
-            onClick={() => setFilterMenu(filter)} 
-          >
-            {filter}
-          </button>
-        </li>
-      ))}
+      {filterOptions.map((optionItem, index) => {
+        return (
+          <li key={index}>
+            <button
+              onClick={() => {
+                setFilterData(optionItem);
+              }}
+              className={`border px-4 py-1 text-center capitalize rounded 
+                    ${
+                      filterData === optionItem
+                        ? "bg-green-600 text-white"
+                        : "bg-slate-800 text-white"
+                    }
+                `}
+            >
+              {optionItem}
+            </button>
+          </li>
+        );
+      })}
     </ul>
   );
 };

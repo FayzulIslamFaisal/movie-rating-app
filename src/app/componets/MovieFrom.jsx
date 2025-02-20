@@ -1,25 +1,35 @@
 "use client";
-import { useState } from "react";
 
-const MovieForm = ({ addMovie }) => {
-  const [movieData, setMovieData] = useState({
+import { useEffect, useState } from "react";
+
+const MovieForm = ({ onAddNewFormData, editData }) => {
+  const [addFormData, setAddFormData] = useState({
     title: "",
     ott: "",
   });
 
+  useEffect(() => {
+    if (editData) {
+      setAddFormData({
+        title: editData.title || "",
+        ott: editData.ott || "",
+      });
+    }
+  }, [editData]);
+
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setMovieData({ ...movieData, [name]: value });
+    setAddFormData({ ...addFormData, [name]: value });
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (!movieData.title.trim() || !movieData.ott.trim()) {
+    if (!addFormData.title || !addFormData.ott) {
+      console.warn("Please enter requer field");
       return;
     }
-
-    addMovie(movieData);
-    setMovieData({ ...movieData, title: "", ott: "" }); // Clear form fields after submission
+    onAddNewFormData(addFormData);
+    setAddFormData({ ...addFormData, title: "", ott: "" });
   };
 
   return (
@@ -34,7 +44,7 @@ const MovieForm = ({ addMovie }) => {
             placeholder="Enter Your Movie Name..."
             className="w-full p-2 border border-gray-300 rounded"
             name="title"
-            value={movieData.title}
+            value={addFormData.title}
             onChange={handleChange}
           />
         </div>
@@ -42,7 +52,7 @@ const MovieForm = ({ addMovie }) => {
           <select
             className="w-full p-2 bg-slate-900 text-white border border-gray-300 rounded"
             name="ott"
-            value={movieData.ott}
+            value={addFormData.ott}
             onChange={handleChange}
           >
             <option value="">Select On OTT</option>
